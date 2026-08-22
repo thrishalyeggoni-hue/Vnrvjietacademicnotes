@@ -1,0 +1,84 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Authenticated user profile for students and faculty",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "uid": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "format": "email", "maxLength": 256 },
+        "name": { "type": "string", "maxLength": 128 },
+        "role": { "type": "string", "enum": ["student", "teacher"] },
+        "rollNo": { "type": "string", "maxLength": 64 },
+        "employeeId": { "type": "string", "maxLength": 64 },
+        "branchId": { "type": "string", "maxLength": 64 },
+        "branchCode": { "type": "string", "maxLength": 32 },
+        "year": { "type": "string", "maxLength": 32 },
+        "semester": { "type": "string", "maxLength": 32 },
+        "designation": { "type": "string", "maxLength": 128 },
+        "department": { "type": "string", "maxLength": 256 },
+        "photoUrl": { "type": "string", "maxLength": 1024 },
+        "createdAt": { "type": "string", "maxLength": 64 },
+        "updatedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["uid", "email", "name", "role"]
+    },
+    "AcademicNoteEntity": {
+      "title": "AcademicNoteEntity",
+      "description": "Curriculum note uploaded by faculty",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "branchId": { "type": "string", "maxLength": 64 },
+        "subjectId": { "type": "string", "maxLength": 64 },
+        "subjectName": { "type": "string", "maxLength": 256 },
+        "subjectCode": { "type": "string", "maxLength": 64 },
+        "unitNumber": { "type": "number" },
+        "title": { "type": "string", "maxLength": 256 },
+        "description": { "type": "string", "maxLength": 2048 },
+        "fileName": { "type": "string", "maxLength": 256 },
+        "fileType": { "type": "string", "maxLength": 32 },
+        "fileSize": { "type": "string", "maxLength": 64 },
+        "isShared": { "type": "boolean" },
+        "uploadedByTeacherName": { "type": "string", "maxLength": 128 },
+        "uploadedByTeacherId": { "type": "string", "maxLength": 128 },
+        "uploadedDate": { "type": "string", "maxLength": 64 },
+        "downloadsCount": { "type": "number" },
+        "isImportant": { "type": "boolean" }
+      },
+      "required": ["id", "branchId", "subjectId", "unitNumber", "title", "uploadedByTeacherId"]
+    },
+    "NotificationEntity": {
+      "title": "NotificationEntity",
+      "description": "Broadcast notification for a branch",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "targetBranchId": { "type": "string", "maxLength": 64 },
+        "title": { "type": "string", "maxLength": 256 },
+        "message": { "type": "string", "maxLength": 1024 },
+        "noteId": { "type": "string", "maxLength": 128 },
+        "subjectName": { "type": "string", "maxLength": 256 },
+        "unitNumber": { "type": "number" },
+        "teacherName": { "type": "string", "maxLength": 128 },
+        "timestamp": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "targetBranchId", "title", "message"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "User profiles for authenticated students and teachers"
+    },
+    "/notes/{noteId}": {
+      "schema": { "$ref": "#/entities/AcademicNoteEntity" },
+      "description": "Academic notes repository"
+    },
+    "/notifications/{notificationId}": {
+      "schema": { "$ref": "#/entities/NotificationEntity" },
+      "description": "Branch-targeted announcements and note publication alerts"
+    }
+  }
+}

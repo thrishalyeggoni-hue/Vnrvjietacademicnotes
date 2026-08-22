@@ -1,0 +1,6 @@
+{
+  "name": "Academic Notes Portal",
+  "description": "A professional academic notes management and sharing platform with branch-based content isolation, teacher controls, and student notifications.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
